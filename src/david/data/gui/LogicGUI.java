@@ -3,6 +3,7 @@ package david.data.gui;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -13,7 +14,7 @@ import david.data.mysql.ConnDataSoure;
 
 public class LogicGUI {
 
-	static ConnDataSoure connDataSoure = new ConnDataSoure();
+	static ConnDataSoure connDataSoure = ConnDataSoure.SingleConn();
 
 	public static List<DataBean> vagueFind(String string) {
 		connDataSoure.setSql("select * from loopholedata where loopholename like ?");
@@ -45,6 +46,16 @@ public class LogicGUI {
 			e.printStackTrace();
 		}
 		analyzer.close();
+		repeats(list);
 		return list;
+	}
+
+	private static void repeats(List<DataBean> list) {
+		Collections.sort(list);
+		for (int i = 0; i < list.size() - 1; i++)
+			if (list.get(i).getCNNVD_ID().equals(list.get(i + 1).getCNNVD_ID())) {
+				list.remove(list.get(i + 1));
+				i--;
+			}
 	}
 }

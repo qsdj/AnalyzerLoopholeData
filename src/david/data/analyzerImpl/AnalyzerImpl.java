@@ -17,10 +17,13 @@ import david.data.mysql.ConnDataSoure;
 
 public class AnalyzerImpl implements IAnalyzer {
 	private String url = "http://www.cnnvd.org.cn/vulnerability/show/cv_cnnvdid/";
-
+	private ConnDataSoure conn = ConnDataSoure.SingleConn();
+	private String sql = "insert into loopholedata values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private StringBuilder builder = new StringBuilder();
 
 	public void analyzer(File file) throws Exception {
+		if (!file.getName().contains("txt") || file.length() == 0)
+			return;
 		Element element = Jsoup.parse(file, "UTF-8");
 		Elements elements = element.select(".cont_details,.rht_cont");
 		String relevantLoophole = "";
@@ -86,7 +89,7 @@ public class AnalyzerImpl implements IAnalyzer {
 		List<DataBean> list = new ArrayList<>();
 		DataBean bean = null;
 		String line = "#";
-		File file=new File("D:\\数据分析结果.txt");
+		File file = new File("D:\\数据分析结果.txt");
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		while (reader.ready()) {
 			String string = line;
@@ -132,8 +135,6 @@ public class AnalyzerImpl implements IAnalyzer {
 	}
 
 	private void mysql(List<DataBean> list) {
-		String sql = "insert into loopholedata values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		ConnDataSoure conn = new ConnDataSoure();
 		conn.setSql(sql);
 		for (DataBean bean : list) {
 			conn.DataSouce(bean.getCNNVD_ID(), bean.getLoopholeName(), bean.getPublishTime(), bean.getUpdateTime(),

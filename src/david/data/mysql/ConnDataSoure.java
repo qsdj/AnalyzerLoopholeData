@@ -18,6 +18,21 @@ public class ConnDataSoure {
 	private PreparedStatement statement;
 	private Connection connection;
 	private String sql;
+	private static ConnDataSoure dataSoure;
+	
+	public static ConnDataSoure SingleConn(){
+		if(dataSoure==null)
+			return dataSoure=new ConnDataSoure();
+		return dataSoure;
+	}
+	
+	private ConnDataSoure() {
+		try {
+			connection = new Conn().conn().getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Connection getConnection() {
 		return connection;
@@ -36,13 +51,7 @@ public class ConnDataSoure {
 		}
 	}
 
-	public ConnDataSoure() {
-		try {
-			connection = new Conn().conn().getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	public List<DataBean> readerSouce(String loopholeName) {
 		try {
@@ -87,7 +96,6 @@ class Conn {
 
 	public DataSource conn() {
 		try {
-			//InputStream inStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties");
 			String path="D:\\db.properties";
 			InputStream inStream=new FileInputStream(path);
 			properties = new Properties();

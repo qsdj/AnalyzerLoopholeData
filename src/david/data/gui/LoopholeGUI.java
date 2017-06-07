@@ -2,12 +2,9 @@ package david.data.gui;
 
 import java.io.File;
 import java.util.List;
-
-import david.data.Ianalyzer.IAnalyzer;
 import david.data.analyzerImpl.AnalyzerImpl;
 import david.data.bean.DataBean;
-import david.data.crawlet.CrwaletDir;
-import david.data.crawlet.CrwaletFile;
+import david.data.crawletList.CrwaletDir;
 
 public class LoopholeGUI extends javax.swing.JFrame {
 
@@ -441,6 +438,8 @@ public class LoopholeGUI extends javax.swing.JFrame {
 	}
 
 	private void findActionPerformed(java.awt.event.ActionEvent evt) {
+		up.setEnabled(true);
+		down.setEnabled(true);
 		String loopName = searchText.getText().trim();
 		if (!loopName.equals("")) {
 			find.setText("正在查询中...");
@@ -557,13 +556,7 @@ public class LoopholeGUI extends javax.swing.JFrame {
 		crwaletData.setText("正在爬取...");
 		crwaletData.setEnabled(false);
 		new CrwaletDir().crwaletDirLoop();
-		CrwaletFile crwaletFile = new CrwaletFile();
-		crwaletFile.analyzerDir();
-		try {
-			crwaletFile.start();
-		} catch (Exception e1) {
-		}
-		IAnalyzer analyzer = new AnalyzerImpl();
+		AnalyzerImpl analyzer = new AnalyzerImpl();
 		String dir = "D:\\国家漏洞详细数据\\";
 		File file = new File(dir);
 		File f[] = file.listFiles();
@@ -578,6 +571,7 @@ public class LoopholeGUI extends javax.swing.JFrame {
 			}
 		crwaletData.setText("爬取数据");
 		crwaletData.setEnabled(true);
+		file.delete();
 	}
 
 	private void clearText() {
