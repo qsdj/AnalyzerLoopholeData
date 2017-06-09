@@ -75,6 +75,7 @@ public class AnalyzerImpl implements IAnalyzer {
 		patch = "";
 		builder.append("##############################\r\n");
 		file.delete();
+		System.out.println("分析成功！"+file.getAbsolutePath());
 	}
 
 	public void dataWrite() throws Exception {
@@ -83,6 +84,7 @@ public class AnalyzerImpl implements IAnalyzer {
 		bufferedWriter.flush();
 		bufferedWriter.close();
 		readerData();
+		
 	}
 
 	private void readerData() throws Exception {
@@ -142,6 +144,7 @@ public class AnalyzerImpl implements IAnalyzer {
 					bean.getLoopholeIntroduce(), bean.getLoopholeAnnounce(), bean.getLoopholePatch(),
 					bean.getEffectEntity(), bean.getRelevantLoophole(), bean.getLoopholeURL());
 		}
+		System.out.println("存储成功！");
 	}
 
 }

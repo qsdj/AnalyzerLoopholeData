@@ -100,7 +100,7 @@ public class LoopholeGUI extends javax.swing.JFrame {
 		crwaletData = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("Antenna");
+		setTitle("信息漏洞软件");
 
 		jLabel1.setFont(new java.awt.Font("宋体", 0, 18)); // NOI18N
 		jLabel1.setText("漏洞名称:");

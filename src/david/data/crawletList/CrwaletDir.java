@@ -56,7 +56,7 @@ public class CrwaletDir {
 		String key = null;
 		try {
 			key = MySqlKey();
-			System.out.println(key);
+			System.out.println("最新ID："+key);
 			if (key == null)
 				return;
 		} catch (Exception e) {
@@ -82,6 +82,7 @@ public class CrwaletDir {
 			outputStream = new FileOutputStream(httpUrl);
 			entity.writeTo(outputStream);
 			outputStream.close();
+			System.out.println("抓取成功！"+url);
 			reader(key);
 		} catch (Exception e) {
 			System.err.println("抓取失败！" + path);
@@ -132,6 +133,7 @@ public class CrwaletDir {
 			entity.writeTo(outputStream);
 			outputStream.flush();
 			outputStream.close();
+			System.out.println("抓取成功！"+url);
 		} catch (Exception e) {
 		}
 	}
